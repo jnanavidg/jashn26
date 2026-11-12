@@ -28,15 +28,7 @@ export default function Register({ onDone }) {
   const s = STEPS[i];
   useEffect(() => { const t = setTimeout(() => input.current?.focus(), 450); return () => clearTimeout(t); }, [i]);
 
-  const go = async (e) => {
-    e.preventDefault();
-    const m = validate(s.key, vals[s.key]);
-    if (m) return setErr(m);
-    setErr("");
-    if (i < 2) { setDir(1); return setI(i + 1); }
-    setBusy(true);
-    try {
-      const go = (e) => {
+  const go = (e) => {
   e.preventDefault();
 
   const m = validate(s.key, vals[s.key]);
