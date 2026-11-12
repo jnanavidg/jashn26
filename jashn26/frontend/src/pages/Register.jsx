@@ -36,7 +36,21 @@ export default function Register({ onDone }) {
     if (i < 2) { setDir(1); return setI(i + 1); }
     setBusy(true);
     try {
-      const r = await fetch("/api/register", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(vals) });
+      const go = (e) => {
+  e.preventDefault();
+
+  const m = validate(s.key, vals[s.key]);
+  if (m) return setErr(m);
+
+  setErr("");
+
+  if (i < 2) {
+    setDir(1);
+    return setI(i + 1);
+  }
+
+  onDone(false);
+};
       const d = await r.json().catch(() => ({}));
       if (!r.ok) { setErr(d.error || "Something went wrong. Please try again."); setBusy(false); return; }
       onDone(d.status === "existing");
