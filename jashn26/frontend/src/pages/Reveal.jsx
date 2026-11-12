@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Download, Share2 } from "lucide-react";
 
-// Uses whichever poster file exists in /assets (png, jpg, jpeg, webp).
 const FILES = ["invitation.png", "invitation.jpg", "invitation.jpeg", "invitation.webp"];
 
 export default function Reveal({ returning }) {
@@ -10,14 +9,24 @@ export default function Reveal({ returning }) {
   const [toast, setToast] = useState("");
   const [fi, setFi] = useState(0);
   const file = FILES[fi];
+  const imageUrl = `${import.meta.env.BASE_URL}assets/${file}`;
   const note = (m) => { setToast(m); setTimeout(() => setToast(""), 2500); };
 
   const share = async () => {
-    const data = { title: "JASHN'26 — Freshers' Party", text: "I just unlocked my invitation to JASHN'26! 🎉 Get yours:", url: window.location.origin };
+    const data = {
+      title: "JASHN'26 — Freshers' Party",
+      text: "I just unlocked my invitation to JASHN'26! 🎉 Get yours:",
+      url: window.location.href
+    };
     try {
       if (navigator.share) await navigator.share(data);
-      else { await navigator.clipboard.writeText(data.url); note("Link copied! Share it with your friends ✨"); }
-    } catch (e) { if (e.name !== "AbortError") note(data.url); }
+      else {
+        await navigator.clipboard.writeText(data.url);
+        note("Link copied! Share it with your friends ✨");
+      }
+    } catch (e) {
+      if (e.name !== "AbortError") note(data.url);
+    }
   };
 
   return (
@@ -27,13 +36,12 @@ export default function Reveal({ returning }) {
         initial={{ x: "0%" }} animate={{ x: "420%" }} transition={{ duration: 1.8, delay: 0.8, ease: "easeInOut" }} />}
       {returning && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="text-center text-gold-light text-xs sm:text-sm shrink-0">Looks like you've already unlocked your invitation! 🎉</motion.p>}
 
-      {/* Poster is fitted to the screen: fully visible, never cropped or stretched */}
       <motion.div className="relative flex-1 min-h-0 w-full flex items-center justify-center py-2"
         initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.6, delay: reduce ? 0 : 1.6, ease: [0.22, 1, 0.36, 1] }}>
         <div className="relative max-h-full max-w-full flex">
           <motion.div className="absolute -inset-px pointer-events-none" style={{ boxShadow: "0 0 0 1px rgba(212,168,75,.7), 0 0 50px rgba(212,168,75,.3)" }}
             animate={reduce ? {} : { opacity: [0.6, 1, 0.6] }} transition={{ duration: 3.5, repeat: Infinity }} />
-          <img src={`/assets/${file}`} alt="JASHN'26 Freshers' Party invitation" decoding="async"
+          <img src={imageUrl} alt="JASHN'26 Freshers' Party invitation" decoding="async"
             onError={() => setFi((n) => Math.min(n + 1, FILES.length - 1))}
             className="block max-h-full max-w-full w-auto h-auto object-contain" />
         </div>
@@ -41,7 +49,7 @@ export default function Reveal({ returning }) {
 
       <motion.div className="shrink-0 w-full flex flex-col items-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduce ? 0 : 3.4, duration: 0.8 }}>
         <div className="flex gap-3 w-full max-w-md justify-center">
-          <a href={`/assets/${file}`} download={`JASHN26-Invitation.${file.split(".")[1]}`} className="gold-btn !px-3 sm:!px-8 flex-1 sm:flex-none !text-[11px] sm:!text-sm"><Download size={16} /> DOWNLOAD</a>
+          <a href={imageUrl} download={`JASHN26-Invitation.${file.split(".")[1]}`} className="gold-btn !px-3 sm:!px-8 flex-1 sm:flex-none !text-[11px] sm:!text-sm"><Download size={16} /> DOWNLOAD</a>
           <button onClick={share} className="gold-btn !px-3 sm:!px-8 flex-1 sm:flex-none !text-[11px] sm:!text-sm"><Share2 size={16} /> SHARE</button>
         </div>
         <p className="mt-3 text-center text-white/60 text-xs sm:text-sm font-light">Get ready for a day full of music, memories and new beginnings.</p>
