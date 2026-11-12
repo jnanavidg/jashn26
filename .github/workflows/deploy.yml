@@ -1,4 +1,3 @@
-
 name: Deploy JASHN26 to GitHub Pages
 
 on:
@@ -23,16 +22,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check project files
+        run: |
+          pwd
+          ls -la
+          ls -la frontend
+          test -f frontend/package.json
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Install dependencies
-        run: npm --prefix frontend install
+        working-directory: frontend
+        run: npm ci
 
       - name: Build frontend
-        run: npm --prefix frontend run build
+        working-directory: frontend
+        run: npm run build
 
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
