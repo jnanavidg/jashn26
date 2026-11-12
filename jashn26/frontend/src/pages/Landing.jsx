@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CalendarDays, Clock, MapPin } from "lucide-react";
 
 const rise = (d) => ({ initial: { opacity: 0, y: 28 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.9, delay: d, ease: [0.22, 1, 0.36, 1] } });
 
@@ -21,7 +21,14 @@ export default function Landing({ onStart }) {
         <motion.div {...rise(1.5)} className="mt-10">
           <button onClick={onStart} className="gold-btn group">GET YOUR INVITATION <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" /></button>
         </motion.div>
-        <motion.p {...rise(1.7)} className="mt-8 text-[11px] sm:text-xs tracking-[0.2em] text-white/40">SAT, 14 NOV 2026 · 11:15 AM – 5:00 PM · MAIN BLOCK SEMINAR HALL</motion.p>
+        <motion.div {...rise(1.7)} className="mt-10 glass grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-gold/20 w-full max-w-2xl">
+          {[[CalendarDays, "DATE", "SAT, 14 NOV 2026"], [Clock, "TIME", "11:15 AM – 5:00 PM"], [MapPin, "VENUE", "MAIN BLOCK SEMINAR HALL"]].map(([Icon, k, v]) => (
+            <div key={k} className="flex sm:flex-col items-center gap-3 sm:gap-2 px-5 py-4 text-left sm:text-center">
+              <Icon size={18} className="text-gold shrink-0" />
+              <div><p className="text-[10px] tracking-[0.3em] text-gold/70">{k}</p><p className="mt-1 text-xs sm:text-[13px] tracking-[0.15em] text-white/90">{v}</p></div>
+            </div>
+          ))}
+        </motion.div>
       </section>
     </div>
   );

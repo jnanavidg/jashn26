@@ -7,11 +7,11 @@ import Reveal from "./pages/Reveal.jsx";
 
 export default function App() {
   const [stage, setStage] = useState("landing"); // landing | register | reveal
-  const [returning, setReturning] = useState(false);
+  const [guest, setGuest] = useState({ fullName: "", studentId: "" });
   const pages = {
     landing: <Landing onStart={() => setStage("register")} />,
-    register: <Register onDone={(existing) => { setReturning(existing); setStage("reveal"); }} />,
-    reveal: <Reveal returning={returning} />,
+    register: <Register onDone={(g) => { setGuest(g); setStage("reveal"); }} />,
+    reveal: <Reveal guest={guest} />,
   };
   return (
     <div className="relative min-h-full bg-ink">
