@@ -7,7 +7,7 @@ export default function Landing({ onStart }) {
   return (
     <div className="min-h-screen flex flex-col px-5 sm:px-10">
       <header className="flex items-center justify-between py-5">
-        <img src="/assets/rit-logo.png" alt="Rajeev Institute of Technology" className="h-10 sm:h-12 w-auto" onError={(e) => (e.currentTarget.style.visibility = "hidden")} />
+        <img src={`${import.meta.env.BASE_URL}assets/rit-logo.png`} alt="Rajeev Institute of Technology" className="h-10 sm:h-12 w-auto" onError={(e) => (e.currentTarget.style.visibility = "hidden")} />
         <span className="text-[10px] sm:text-xs tracking-[0.3em] text-gold-light/80">FRESHERS' PARTY 2026</span>
       </header>
       <section className="flex-1 flex flex-col items-center justify-center text-center pb-16">

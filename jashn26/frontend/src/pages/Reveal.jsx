@@ -15,7 +15,7 @@ export default function Reveal({ guest }) {
   const note = (m) => { setToast(m); setTimeout(() => setToast(""), 2500); };
 
   const share = async () => {
-    const data = { title: "JASHN'26 — Freshers' Party", text: "I just unlocked my invitation to JASHN'26! 🎉 Get yours:", url: window.location.origin };
+    const data = { title: "JASHN'26 — Freshers' Party", text: "I just unlocked my invitation to JASHN'26! 🎉 Get yours:", url: window.location.href.split(/[?#]/)[0] };
     try {
       if (navigator.share) await navigator.share(data);
       else { await navigator.clipboard.writeText(data.url); note("Link copied! Share it with your friends ✨"); }
@@ -48,7 +48,7 @@ export default function Reveal({ guest }) {
               </div>
             </div>
           ) : (
-            <motion.img key={file} src={`/assets/${file}`} alt="JASHN'26 Freshers' Party invitation" decoding="async"
+            <motion.img key={file} src={`${import.meta.env.BASE_URL}assets/${file}`} alt="JASHN'26 Freshers' Party invitation" decoding="async"
               onError={() => (fi < FILES.length - 1 ? setFi(fi + 1) : setMissing(true))}
               animate={reduce ? undefined : { boxShadow: GLOW }} transition={{ duration: 3.5, repeat: Infinity }}
               className="block max-h-full max-w-full w-auto h-auto object-contain" />
@@ -57,7 +57,7 @@ export default function Reveal({ guest }) {
       </motion.div>
       <motion.div className="shrink-0 w-full flex flex-col items-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduce ? 0 : 2, duration: 0.8 }}>
         <div className="flex gap-3 w-full max-w-md justify-center">
-          {!missing && <a href={`/assets/${file}`} download={`JASHN26-Invitation.${file.split(".")[1]}`} className="gold-btn !px-3 sm:!px-8 flex-1 sm:flex-none !text-[11px] sm:!text-sm"><Download size={16} /> DOWNLOAD</a>}
+          {!missing && <a href={`${import.meta.env.BASE_URL}assets/${file}`} download={`JASHN26-Invitation.${file.split(".")[1]}`} className="gold-btn !px-3 sm:!px-8 flex-1 sm:flex-none !text-[11px] sm:!text-sm"><Download size={16} /> DOWNLOAD</a>}
           <button onClick={share} className="gold-btn !px-3 sm:!px-8 flex-1 sm:flex-none !text-[11px] sm:!text-sm"><Share2 size={16} /> SHARE</button>
         </div>
         <p className="mt-3 text-center text-white/60 text-xs sm:text-sm font-light">Get ready for a day full of music, memories and new beginnings.</p>
