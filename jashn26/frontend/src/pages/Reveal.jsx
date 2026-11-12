@@ -9,7 +9,7 @@ export default function Reveal({ returning }) {
   const [toast, setToast] = useState("");
   const [fi, setFi] = useState(0);
   const file = FILES[fi];
-  const imageUrl = `${import.meta.env.BASE_URL}assets/${file}`;
+  const imageUrl = `${import.meta.env.BASE_URL}assets/invitation.jpeg`;
   const note = (m) => { setToast(m); setTimeout(() => setToast(""), 2500); };
 
   const share = async () => {
@@ -41,7 +41,7 @@ export default function Reveal({ returning }) {
         <div className="relative max-h-full max-w-full flex">
           <motion.div className="absolute -inset-px pointer-events-none" style={{ boxShadow: "0 0 0 1px rgba(212,168,75,.7), 0 0 50px rgba(212,168,75,.3)" }}
             animate={reduce ? {} : { opacity: [0.6, 1, 0.6] }} transition={{ duration: 3.5, repeat: Infinity }} />
-          <img src={imageUrl} alt="JASHN'26 Freshers' Party invitation" decoding="async"
+         <img src={imageUrl} alt="JASHN'26 Invitation" decoding="async"
             onError={() => setFi((n) => Math.min(n + 1, FILES.length - 1))}
             className="block max-h-full max-w-full w-auto h-auto object-contain" />
         </div>
