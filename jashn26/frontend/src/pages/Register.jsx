@@ -116,7 +116,7 @@ export default function Register({ onDone }) {
       <div className="h-px bg-white/10 mt-3">
         <motion.div
           className="h-px bg-gold"
-          animate={{ width: `${((i + 1) / 3) * 100}%` }}
+          animate={{ width: ((i + 1) / 3) * 100 + "%" }}
           transition={{ duration: 0.6 }}
         />
       </div>
